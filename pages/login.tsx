@@ -11,7 +11,7 @@ interface Inputs {
   password:string
 }
 
-const login = (props: Props) => {
+const Login = (props: Props) => {
 
   const [Login , setLogin] = useState(false)
 
@@ -92,4 +92,4 @@ const login = (props: Props) => {
   )
 }
 
-export default login
+export default Login
