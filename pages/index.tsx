@@ -3,9 +3,14 @@ import Image from 'next/image'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
 import Row from '../components/Row'
+import useAuth from '../hooks/useAuth'
 import styles from '../styles/Home.module.css'
 import { Movie } from '../typeProps'
 import requests from '../utils/allRequests'
+import { useRecoilValue } from 'recoil';
+import { modalState } from '../states/ModalState'
+import Modal from '../components/Modal'
+
 
 interface Props {
   netflixOriginals:Movie[],
@@ -30,7 +35,14 @@ export default function Home({
   documentaries
 } : Props) {
 
-// console.log(netflixOriginals)
+  const {loading} = useAuth()
+  const showModal = useRecoilValue(modalState)
+
+  console.log(showModal)
+
+
+  if(loading) return "Loading..."
+
   return (
     <div className='relative h-screen bg-gradient-to-b lg:h-[140vh]  '>
       <Head>
@@ -53,6 +65,7 @@ export default function Home({
       <Row title="Documentaries" movies={documentaries}/>
     </section>
     </main>
+    {showModal && <Modal/>}
     </div>
   )
 }
@@ -68,15 +81,15 @@ export const getServerSideProps = async()=>{
    horrorMovies,
    romanceMovies,
    documentaries
-  ] = await Promise.all([
-    fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
-    fetch(requests.fetchTrending).then((res) => res.json()),
-    fetch(requests.fetchTopRated).then((res) => res.json()),
-    fetch(requests.fetchActionMovies).then((res) => res.json()),
-    fetch(requests.fetchComedyMovies).then((res) => res.json()),
-    fetch(requests.fetchHorrorMovies).then((res) => res.json()),
-    fetch(requests.fetchRomanceMovies).then((res) => res.json()),
-    fetch(requests.fetchDocumentaries).then((res) => res.json()),
+  ] = await Promise?.all([
+    fetch(requests?.fetchNetflixOriginals).then((res) => res?.json()),
+    fetch(requests?.fetchTrending).then((res) => res?.json()),
+    fetch(requests?.fetchTopRated).then((res) => res?.json()),
+    fetch(requests?.fetchActionMovies).then((res) => res?.json()),
+    fetch(requests?.fetchComedyMovies).then((res) => res?.json()),
+    fetch(requests?.fetchHorrorMovies).then((res) => res?.json()),
+    fetch(requests?.fetchRomanceMovies).then((res) => res?.json()),
+    fetch(requests?.fetchDocumentaries).then((res) => res?.json()),
   ])
 
 
